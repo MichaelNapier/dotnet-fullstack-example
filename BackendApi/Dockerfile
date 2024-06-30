@@ -14,6 +14,9 @@ RUN dotnet restore "BackendApi.csproj"
 COPY BackendApi .
 WORKDIR "/src/."
 RUN dotnet build "BackendApi.csproj" -c $configuration -o /app/build
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
 # CMD [ "dotnet", "watch", "--non-interactive", "run", "--launch-profile", "Docker" ]
 
 # FROM build AS dev
