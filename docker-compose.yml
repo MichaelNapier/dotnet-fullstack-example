@@ -1,0 +1,47 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.9'
+
+services:
+
+  # frontend:
+  #   container_name: frontend-react
+  #   build:
+  #     context: .
+  #     dockerfile: Frontend/Dockerfile
+  #   ports:
+  #     - 5173:5173
+  #   network_mode: host
+
+  backend.api:
+    image: backendapi 
+    container_name: backend.api
+    build:
+      context: .
+      target: publish
+      dockerfile: BackendApi/Dockerfile
+    ports:
+      - 5000:5000
+      - 5001:5001
+    environment:
+      ConnectionStrings__Database: "Host=backend.database;Port=5432;Database=postgres;Username=postgres;Password=postgres;Include Error Detail=true"
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 5000
+    command: "dotnet watch --non-interactive --launch-profile http"
+    volumes:
+      - ./BackendApi:/src
+    depends_on:
+      - backend.database
+  
+  backend.database:
+    image: postgres:latest
+    container_name: BackendApi.database
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/backend-db:/var/lib/postgresql/data
+    ports:
+      - 5454:5432
+  
