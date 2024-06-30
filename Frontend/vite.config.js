@@ -25,7 +25,7 @@ export default defineConfig({
           });
         },
       },
-      '/games': {
+      '/game': {
         target: 'http://localhost:5000', // Mock server port
         changeOrigin: true,
         secure: false,
