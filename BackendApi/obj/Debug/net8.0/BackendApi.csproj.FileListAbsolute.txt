@@ -208,3 +208,4 @@
 /src/obj/Debug/net8.0/BackendApi.pdb
 /src/obj/Debug/net8.0/BackendApi.genruntimeconfig.cache
 /src/obj/Debug/net8.0/ref/BackendApi.dll
+/home/mnapier/dev/MichaelNapier/dotnet-projects/dotnet-fullstack-example/BackendApi/obj/Debug/net8.0/BackendApi.sourcelink.json

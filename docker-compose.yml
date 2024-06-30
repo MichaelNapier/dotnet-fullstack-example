@@ -4,14 +4,16 @@ version: '3.9'
 
 services:
 
-  # frontend:
-  #   container_name: frontend-react
-  #   build:
-  #     context: .
-  #     dockerfile: Frontend/Dockerfile
-  #   ports:
-  #     - 5173:5173
-  #   network_mode: host
+  frontend:
+    container_name: frontend-react
+    build:
+      context: .
+      dockerfile: Frontend/Dockerfile
+    ports:
+      - 5173:5173
+    network_mode: host
+    depends_on:
+      - backend.api
 
   backend.api:
     image: backendapi 
@@ -27,7 +29,7 @@ services:
       ConnectionStrings__Database: "Host=backend.database;Port=5432;Database=postgres;Username=postgres;Password=postgres;Include Error Detail=true"
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 5000
-    command: "dotnet watch --non-interactive --launch-profile http"
+    command: "./entrypoint.sh"
     volumes:
       - ./BackendApi:/src
     depends_on:
@@ -44,4 +46,3 @@ services:
       - ./.containers/backend-db:/var/lib/postgresql/data
     ports:
       - 5454:5432
-  
